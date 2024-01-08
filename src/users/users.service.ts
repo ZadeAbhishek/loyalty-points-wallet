@@ -3,47 +3,58 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 
-
 @Injectable()
 export class UsersService {
-  // Hardcoded user data - Replace this with database logic
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
   ) {}
 
+  // Fetch all users from the database
   async findAll(): Promise<User[]> {
     return this.usersRepository.find();
   }
 
-  async createOne(user:User) {
+  // Create a new user in the database
+  async createOne(user: User) {
     return this.usersRepository.save(user);
   }
 
+  // Find a user by their email in the database
   async findOne(email: string): Promise<User | undefined> {
     let Email = email;
     return await this.usersRepository.findOne({ where: { Email } });
   }
 
+  // Remove a user from the database by their ID
   async remove(id: number): Promise<void> {
     await this.usersRepository.delete(id);
   }
 
-  async earn(email: string, points:number): Promise<User | undefined> {
+  // Add points to a user's account based on their email
+  async earn(email: string, points: number): Promise<User | undefined> {
     let Email = email;
     let user = this.usersRepository.findOne({ where: { Email } });
-    console.log(email);
+    
     (await user).Points += points;
-    this.usersRepository.update((await user).id,(await user));
+    this.usersRepository.update((await user).id, (await user));
+    
     return (await user);
   }
 
-  async burn(email: string, points:number): Promise<User | undefined> {
+  // Deduct points from a user's account based on their email
+  async burn(email: string, points: number): Promise<User | undefined> {
     let Email = email;
     let user = this.usersRepository.findOne({ where: { Email } });
-    if((await user).Points >= points) (await user).Points -= points;
-    else (await user).Points = 0;
-    this.usersRepository.update((await user).id,(await user));
+
+    if ((await user).Points >= points) {
+      (await user).Points -= points;
+    } else {
+      (await user).Points = 0;
+    }
+    
+    this.usersRepository.update((await user).id, (await user));
+    
     return (await user);
   }
 }

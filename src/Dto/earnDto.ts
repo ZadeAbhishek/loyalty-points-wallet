@@ -1,4 +1,4 @@
 export class EarnInDto {
-    points: number;
-    type:string;
-  }
+  points: number; // Number of points to be earned or added
+  type: string; // Type of earning (e.g., 'earn','burn')
+}

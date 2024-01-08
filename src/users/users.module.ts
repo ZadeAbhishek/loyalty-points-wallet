@@ -5,10 +5,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersController } from './users.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
-  providers: [UsersService],
-  exports: [UsersService], // Export UsersService if it's needed elsewhere
-  controllers: [UsersController],
+  imports: [TypeOrmModule.forFeature([User])], // Importing the TypeORM module to define User as a feature
+  providers: [UsersService], // Providing the UsersService for dependency injection
+  exports: [UsersService], // Exporting UsersService to make it available to other modules if needed
+  controllers: [UsersController], // Declaring the UsersController to handle HTTP requests
 })
 export class UsersModule {}
-

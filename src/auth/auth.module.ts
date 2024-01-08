@@ -7,15 +7,15 @@ import { jwtConstants } from './constants';
 
 @Module({
   imports: [
-    UsersModule,
-    JwtModule.register({
-      global: true,
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: '300s' },
+    UsersModule, // Importing the UsersModule to access user-related functionality
+    JwtModule.register({ // Registering the JwtModule for JWT functionality
+      global: true, // Indicates if the module is global-scoped
+      secret: jwtConstants.secret, // Secret key used for signing tokens
+      signOptions: { expiresIn: '300s' }, // Token expiration time set to 300 seconds (5 minutes)
     }),
   ],
-  providers: [AuthService],
-  controllers: [AuthController],
-  exports: [AuthService],
+  providers: [AuthService], // Providing the AuthService for dependency injection
+  controllers: [AuthController], // Making the AuthController available within this module
+  exports: [AuthService], // Exporting the AuthService to be used in other modules
 })
 export class AuthModule {}

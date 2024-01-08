@@ -10,30 +10,44 @@ export class AuthService {
     private jwtService: JwtService
   ) {}
 
-  async signIn(Email:string, pass:string) {
-    let user  = await this.usersService.findOne(Email);
-    if (user?.Password !== pass) {
-        console.log("Exception")
-      throw new UnauthorizedException();
+  // Method for user sign-in
+  async signIn(email: string, pass: string) {
+    // Find user by email
+    let user = await this.usersService.findOne(email);
+
+    // Check if user exists and if the provided password matches
+    if (!user || user.Password !== pass) {
+      console.log("Exception");
+      throw new UnauthorizedException(); // Throw UnauthorizedException if credentials are invalid
     }
+
+    // Create JWT payload with user ID and email
     const payload = { sub: user.id, userEmail: user.Email };
+
+    // Sign the payload and return an access token
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
   }
 
+  // Method for user sign-up
+  async signUp(username: string, password: string, email: string) {
+    // Check if required fields are provided, else throw UnauthorizedException
+    if (!username || !password || !email) {
+      throw new UnauthorizedException();
+    }
 
-  async signUp(username, password, email) {
-    if(!username || !password || !email) throw new UnauthorizedException();
-    let  user = new User();
+    // Create a new User entity with provided details
+    let user = new User();
     user.Name = username;
     user.Password = password;
     user.Email = email;
     user.Points = 0;
+
+    // Create the user and return the created user
     return this.usersService.createOne(user);
   }
 }
-
 
 /* 
 Of course in a real application, you wouldn't store a password in plain text. You'd instead use a 
@@ -41,3 +55,4 @@ library like bcrypt, with a salted one-way hash algorithm. With that approach, y
 passwords, and then compare the stored password to a hashed version of the incoming password, thus never 
 storing or exposing user passwords in plain text. 
 */
+
