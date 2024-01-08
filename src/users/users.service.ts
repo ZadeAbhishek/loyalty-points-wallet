@@ -12,11 +12,11 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  findAll(): Promise<User[]> {
+  async findAll(): Promise<User[]> {
     return this.usersRepository.find();
   }
 
-  createOne(user:User) {
+  async createOne(user:User) {
     return this.usersRepository.save(user);
   }
 
@@ -27,5 +27,23 @@ export class UsersService {
 
   async remove(id: number): Promise<void> {
     await this.usersRepository.delete(id);
+  }
+
+  async earn(email: string, points:number): Promise<User | undefined> {
+    let Email = email;
+    let user = this.usersRepository.findOne({ where: { Email } });
+    console.log(email);
+    (await user).Points += points;
+    this.usersRepository.update((await user).id,(await user));
+    return (await user);
+  }
+
+  async burn(email: string, points:number): Promise<User | undefined> {
+    let Email = email;
+    let user = this.usersRepository.findOne({ where: { Email } });
+    if((await user).Points >= points) (await user).Points -= points;
+    else (await user).Points = 0;
+    this.usersRepository.update((await user).id,(await user));
+    return (await user);
   }
 }
