@@ -9,7 +9,9 @@ import { User } from './users/user.entity';
 import { Transaction } from './transactions/transaction.entity';
 import { TransactionsModule } from './transactions/transactions.module';
 import { TransactionsController } from './transactions/transactions.controller';
-
+import { PointTableModule } from './point-table/point-table.module';
+import { Point_table } from './point-table/point-table.entity';
+import { PointTableController } from './point-table/point-table.controller';
 @Module({
   // Importing required modules and configuring the application
   imports: [
@@ -27,10 +29,11 @@ import { TransactionsController } from './transactions/transactions.controller';
       synchronize: true, // Auto-sync database schema (caution in production)
       autoLoadEntities: true, // Auto-load entities from the given directories
     }),
-    TypeOrmModule.forFeature([User, Transaction]), // Importing TypeORM entities into the application
+    TypeOrmModule.forFeature([User, Transaction, Point_table]),
+    PointTableModule, // Importing TypeORM entities into the application
   ],
   // Registering controllers and services within the module
-  controllers: [AppController, TransactionsController], // Controllers handling HTTP requests
+  controllers: [AppController, TransactionsController, PointTableController], // Controllers handling HTTP requests
   providers: [AppService], // Services used within the application
 })
 export class AppModule {

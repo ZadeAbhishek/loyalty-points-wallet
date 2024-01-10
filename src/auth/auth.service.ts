@@ -2,12 +2,14 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/users/user.entity';
+import { PointTableService } from 'src/point-table/point-table.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private pointTableService : PointTableService
   ) {}
 
   // Method for user sign-in
@@ -42,10 +44,16 @@ export class AuthService {
     user.Name = username;
     user.Password = password;
     user.Email = email;
-    user.Points = 0;
 
     // Create the user and return the created user
-    return this.usersService.createOne(user);
+    await  this.usersService.createOne(user);
+
+    // register to point table
+    await this.pointTableService.registerUser(email);
+
+    return {message : `${username} Registed SuccesFull`};
+
+
   }
 }
 

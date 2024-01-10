@@ -4,10 +4,12 @@ import { UsersModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { jwtConstants } from './constants';
+import { PointTableModule } from 'src/point-table/point-table.module';
 
 @Module({
   imports: [
     UsersModule, // Importing the UsersModule to access user-related functionality
+    PointTableModule,
     JwtModule.register({ // Registering the JwtModule for JWT functionality
       global: true, // Indicates if the module is global-scoped
       secret: jwtConstants.secret, // Secret key used for signing tokens

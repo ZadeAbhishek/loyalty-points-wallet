@@ -33,41 +33,4 @@ export class UsersService {
     await this.usersRepository.delete(id);
   }
 
-  // Add points to a user's account based on their email
-  async earn(email: string, points: number): Promise<User | undefined> {
-    let Email = email;
-    let user = this.usersRepository.findOne({ where: { Email } });
-    
-    (await user).Points += points;
-    this.usersRepository.update((await user).id, (await user));
-    let transaction = new Transaction();
-    transaction.Email = email;
-    transaction.Statement = `Credited +${(points)} pt`;
-    transaction.time = new Date().toString().replace(/T/, ':').replace(/\.\w*/, '');
-    await this.transactionService.createTransaction(transaction);
-    
-    
-    return (await user);
-  }
-
-  // Deduct points from a user's account based on their email
-  async burn(email: string, points: number): Promise<User | undefined> {
-    let Email = email;
-    let user = this.usersRepository.findOne({ where: { Email } });
-
-    if ((await user).Points >= points) {
-      (await user).Points -= points;
-    } else {
-      (await user).Points = 0;
-    }
-    
-    this.usersRepository.update((await user).id, (await user)); // update user Points
-    let transaction = new Transaction();
-    transaction.Email = email;
-    transaction.Statement = `Debited -${points} pt`;
-    transaction.time = new Date().toString().replace(/T/, ':').replace(/\.\w*/, '');
-    await this.transactionService.createTransaction(transaction);
-    
-    return (await user);
-  }
 }
