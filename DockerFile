@@ -1,6 +1,6 @@
-FROM node:18
+FROM node:18 AS development
 
-WORKDIR /app
+WORKDIR /jio_loyalty/src/app
 
 COPY package*.json ./
 
@@ -14,4 +14,4 @@ COPY . .
 
 RUN npm run build
 
-CMD [ "npm", "run", "start:dev" ]
+# CMD [ "npm", "run", "start:dev" ]

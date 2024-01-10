@@ -6,30 +6,35 @@ services:
     restart: always
     environment:
       - POSTGRES_PASSWORD=Hacker@55
-    container_name: postgres
+    container_name: postgres-server
     volumes:
       - ./pgdata:/var/lib/postgresql/data
     ports:
-      - '5433:5432'
+      - '5432:5432'
 
   app:
     build:
       context: .
       dockerfile: ./DockerFile
-    container_name: nest-docker-postgres
+      target: development
+
+    volumes:
+      - .:/jio_loyalty/src/app
+      -  ./node_modules:/jio_loyalty/src/app/node_modules
+
+    container_name: nest-server
     environment:
       - PORT=${PORT}
     ports:
       - '3000:3000'
     depends_on:
       - db
-    volumes:
-      - ./src:/app/src
+    command: npm run start:dev  
 
   pgadmin:
     image: dpage/pgadmin4
     restart: always
-    container_name: nest-pgadmin4
+    container_name: pgadmin4-server
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
       - PGADMIN_DEFAULT_PASSWORD=pgadmin4
