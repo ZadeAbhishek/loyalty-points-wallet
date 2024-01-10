@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { User } from './users/user.entity';
+import { Transaction } from './transactions/transaction.entity';
 import { TransactionsModule } from './transactions/transactions.module';
 import { TransactionsController } from './transactions/transactions.controller';
 
@@ -14,6 +15,7 @@ import { TransactionsController } from './transactions/transactions.controller';
   imports: [
     AuthModule, // Importing the AuthModule for authentication-related functionalities
     UsersModule, // Importing the UsersModule for user-related functionalities
+    TransactionsModule, // Importing the TransactionsModule for transaction functionalities
     TypeOrmModule.forRoot({ // Configuring TypeORM for database connection
       type: 'postgres', // Database type (PostgreSQL)
       host: 'localhost', // Database host
@@ -25,8 +27,7 @@ import { TransactionsController } from './transactions/transactions.controller';
       synchronize: true, // Auto-sync database schema (caution in production)
       autoLoadEntities: true, // Auto-load entities from the given directories
     }),
-    TypeOrmModule.forFeature([User]), // Importing TypeORM entities into the application
-    TransactionsModule, // Importing the TransactionsModule for transaction functionalities
+    TypeOrmModule.forFeature([User, Transaction]), // Importing TypeORM entities into the application
   ],
   // Registering controllers and services within the module
   controllers: [AppController, TransactionsController], // Controllers handling HTTP requests

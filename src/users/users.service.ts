@@ -2,12 +2,14 @@ import { Body, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-
+import { TransactionsService } from 'src/transactions/transactions.service';
+import { Transaction } from 'src/transactions/transaction.entity';
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private transactionService : TransactionsService,
   ) {}
 
   // Fetch all users from the database
@@ -38,6 +40,12 @@ export class UsersService {
     
     (await user).Points += points;
     this.usersRepository.update((await user).id, (await user));
+    let transaction = new Transaction();
+    transaction.Email = email;
+    transaction.Statement = `Credited +${(points)} pt`;
+    transaction.time = new Date().toString().replace(/T/, ':').replace(/\.\w*/, '');
+    await this.transactionService.createTransaction(transaction);
+    
     
     return (await user);
   }
@@ -53,7 +61,12 @@ export class UsersService {
       (await user).Points = 0;
     }
     
-    this.usersRepository.update((await user).id, (await user));
+    this.usersRepository.update((await user).id, (await user)); // update user Points
+    let transaction = new Transaction();
+    transaction.Email = email;
+    transaction.Statement = `Debited -${points} pt`;
+    transaction.time = new Date().toString().replace(/T/, ':').replace(/\.\w*/, '');
+    await this.transactionService.createTransaction(transaction);
     
     return (await user);
   }
