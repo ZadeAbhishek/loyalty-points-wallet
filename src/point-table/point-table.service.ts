@@ -42,7 +42,7 @@ export class PointTableService {
           await this.point_table_db.update(user.id,user);
 
           // add to transaction table
-          createTransaction(Email,`Credited +${(Points)} pt`,this.point_db);
+          createTransaction(Email,`congo Credited +${(Points)} pt`,this.point_db);
       
           return; // Success, points updated
         } catch (error) {

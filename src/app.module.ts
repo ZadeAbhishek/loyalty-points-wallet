@@ -20,12 +20,12 @@ import { PointTableController } from './point-table/point-table.controller';
     TransactionsModule, // Importing the TransactionsModule for transaction functionalities
     TypeOrmModule.forRoot({ // Configuring TypeORM for database connection
       type: 'postgres', // Database type (PostgreSQL)
-      host: 'localhost', // Database host
+      host: 'db', // Database host
       port: 5432, // Database port
       username: 'postgres', // Database username
       password: 'Hacker@55', // Database password
-      database: 'loyalty_db', // Database name
-      entities: [User], // Database entities (e.g., User entity)
+      database: 'postgres', // Database name
+      entities: [User,Transaction,Point_table], // Database entities (e.g., User entity)
       synchronize: true, // Auto-sync database schema (caution in production)
       autoLoadEntities: true, // Auto-load entities from the given directories
     }),
