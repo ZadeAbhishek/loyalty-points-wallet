@@ -48,7 +48,7 @@ export class PointTableService {
         } catch (error) {
           // Handle errors
           console.error('Error in earning points:', error.message);
-          throw new Error('Failed to earn points'); // Rethrow the error for the caller to handle
+          throw new Error('Failed to earn point'); // Rethrow the error for the caller to handle
         }
       }
 

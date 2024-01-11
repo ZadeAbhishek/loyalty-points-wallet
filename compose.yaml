@@ -19,17 +19,17 @@ services:
       target: development
 
     volumes:
-      - .:/jio_loyalty/src/app
-      -  ./node_modules:/jio_loyalty/src/app/node_modules
-
+      - .:/home/node/app
+      - ./node_modules:/home/node/app/node_modules
+    command: npm run start:dev 
     container_name: nest-server
     environment:
-      - PORT=${PORT}
+      - PORT=3000  # Set a default PORT if not defined elsewhere
+      - NODE_ENV=development
     ports:
       - '3000:3000'
     depends_on:
-      - db
-    command: npm run start:dev  
+      - db 
 
   pgadmin:
     image: dpage/pgadmin4
