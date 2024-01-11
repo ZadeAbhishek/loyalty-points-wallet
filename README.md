@@ -1,4 +1,6 @@
 
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
@@ -95,27 +97,27 @@ The are three tables used in this project.
 
 This is Post request Where we have to send user Information in body
 
-
+    ```json
     {
       "username": "Abhishek Zade",
       "password": "Hacker@55",
       "email": "zadeabhi8781@gmail.com"
     }
-
+    ```
 
 2. Login User ` http://0.0.0.0:3000/auth/login ` 
 This is post request where we habe send user cred as body.
 
-
+    ```json
     {"email":"zadeabhi8781@gmail.com", "password":"Hacker@55"}
-
+    ```
 
 in responce we will get Bear token which will be required for futher Operations
 for example
 
-
+    ```
     eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJFbWFpbCI6InphZGVhYmhpODc4MUBnbWFpbC5jb20iLCJpYXQiOjE3MDQ4OTI3NzIsImV4cCI6MTcwNDg5MzA3Mn0.gMrcgCZrPfiEVyLcPnc5........................
-
+    ```
 
 3. Get User Profile ` http://localhost:3000/users/profile `
 This is Get request where users information comes in response.
@@ -135,11 +137,11 @@ Token : Copy the responce token form login API.
 6. Earn point ` http://localhost:3000/points/earnPoints `
 This is put request where we have to send points in body.
 
-
+    ```json
     {
       "points": 1500
     }
-
+    ```
 
 Auth-type: Bearer token
 Token : Copy the responce token form login API.
@@ -147,12 +149,12 @@ Token : Copy the responce token form login API.
 7. Burn point ` http://localhost:3000/points/burnPoints `
 This is put request where we have to send points in body.
 
-
+    ```bash
     {
       "points": 500
     }
 
-
+    ```
 
 Auth-type: Bearer token
 Token : Copy the responce token form login API.
