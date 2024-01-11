@@ -19,7 +19,7 @@
     "noFallthroughCasesInSwitch": false,
     },
     "watchOptions": {
-      "watchFile": "fixedPollingInterval"
+      "watchFile": "fixedPollingInterval",
   }
 }
 

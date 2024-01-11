@@ -18,18 +18,18 @@ import { PointTableController } from './point-table/point-table.controller';
     AuthModule, // Importing the AuthModule for authentication-related functionalities
     UsersModule, // Importing the UsersModule for user-related functionalities
     TransactionsModule, // Importing the TransactionsModule for transaction functionalities
-    TypeOrmModule.forRoot({ // Configuring TypeORM for database connection
-      type: 'postgres', // Database type (PostgreSQL)
-      host: 'db', // Database host
-      port: 5432, // Database port
-      username: 'postgres', // Database username
-      password: 'Hacker@55', // Database password
-      database: 'postgres', // Database name
-      entities: [User,Transaction,Point_table], // Database entities (e.g., User entity)
-      synchronize: true, // Auto-sync database schema (caution in production)
-      autoLoadEntities: true, // Auto-load entities from the given directories
-    }),
-    TypeOrmModule.forFeature([User, Transaction, Point_table]),
+    // TypeOrmModule.forRoot({ // Configuring TypeORM for database connection
+    //   type: 'postgres', // Database type (PostgreSQL)
+    //   host: 'db', // Database host
+    //   port: 5432, // Database port
+    //   username: 'postgres', // Database username
+    //   password: 'Hacker@55', // Database password
+    //   database: 'postgres', // Database name
+    //   entities: [User,Transaction,Point_table], // Database entities (e.g., User entity)
+    //   synchronize: true, // Auto-sync database schema (caution in production)
+    //   autoLoadEntities: true, // Auto-load entities from the given directories
+    // }),
+    // TypeOrmModule.forFeature([User, Transaction, Point_table]),
     PointTableModule, // Importing TypeORM entities into the application
   ],
   // Registering controllers and services within the module
