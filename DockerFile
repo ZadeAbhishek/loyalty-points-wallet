@@ -4,13 +4,7 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install 
-
-RUN npm i @nestjs/cli --save
-
-RUN npm install --save @nestjs/typeorm typeorm
-
-RUN npm install pg --save
+RUN npm install && npm i @nestjs/cli --save && npm i --save @nestjs/typeorm typeorm && npm install pg --save && npm install class-validator --save
 
 COPY . .
 
