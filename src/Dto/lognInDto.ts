@@ -9,7 +9,6 @@ Validators used in this project
 */
 
 export class LogInDto {
-
   @IsNotEmpty()
   @IsEmail()
   @Matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,3}$/g)

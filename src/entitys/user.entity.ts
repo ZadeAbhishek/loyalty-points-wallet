@@ -1,9 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToMany, OneToOne, JoinColumn} from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  OneToMany,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Transaction } from './transaction.entity';
 import { Point_table } from './point-table.entity';
-import { join } from 'path';
-
-
 
 @Entity()
 export class User {
@@ -22,11 +27,12 @@ export class User {
   @CreateDateColumn()
   UserCreatedTime: Date;
 
-  @OneToMany(() => Transaction, transaction => transaction.user)
+  @OneToMany(() => Transaction, (transaction) => transaction.user)
   transactions: Transaction[];
 
-  @OneToOne(() => Point_table, point_table => point_table.user, { cascade: true })
+  @OneToOne(() => Point_table, (point_table) => point_table.user, {
+    cascade: true,
+  })
   @JoinColumn()
   point_table: Point_table;
-  
 }

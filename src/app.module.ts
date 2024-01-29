@@ -13,14 +13,15 @@ import { Point_table } from './entitys/point-table.entity';
   imports: [
     AuthModule, // Importing the AuthModule for authentication-related functionalities
     UsersModule, // Importing the UsersModule for user-related functionalities
-    TypeOrmModule.forRoot({ // Configuring TypeORM for database connection
+    TypeOrmModule.forRoot({
+      // Configuring TypeORM for database connection
       type: 'postgres', // Database type (PostgreSQL)
       host: 'db', // Database host
       port: 5432, // Database port
       username: 'postgres', // Database username
       password: 'Hacker@55', // Database password
       database: 'postgres', // Database name
-      entities: [User,Transaction,Point_table], // Database entities (e.g., User entity)
+      entities: [User, Transaction, Point_table], // Database entities (e.g., User entity)
       synchronize: true, // Auto-sync database schema (caution in production)
       autoLoadEntities: true, // Auto-load entities from the given directories
     }),

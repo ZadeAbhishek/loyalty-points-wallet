@@ -16,12 +16,10 @@ export class AuthService {
   // Method for user sign-in
   async signIn(logInDto: LogInDto) {
     // Find user by email
-    let user = await this.usersService.findOne(logInDto.Email);
-    console.log(user);
+    const user = await this.usersService.findOne(logInDto.Email);
 
     // Check if user exists and if the provided password matches
     if (!user || user.Password !== logInDto.Password) {
-      console.log("Exception");
       throw new UnauthorizedException(); // Throw UnauthorizedException if credentials are invalid
     }
 
@@ -42,15 +40,15 @@ export class AuthService {
     }
 
     // Create a new User entity with provided details
-    let user = new User();
+    const user = new User();
     user.Name = signInDto.UserName;
     user.Password = signInDto.Password;
     user.Email = signInDto.Email;
-    
+
     // Initialize point_table for the user
     user.point_table = new Point_table();
-    user.point_table.CurrPoints = 0;
-    user.point_table.TotalPoints = 0;
+    user.point_table.CurrPoints = 1000; // start ammount
+    user.point_table.TotalPoints = 1000;
     user.point_table.Email = signInDto.Email;
 
     // Create the user and return the created user

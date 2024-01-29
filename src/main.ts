@@ -7,9 +7,8 @@ async function bootstrap() {
   /**
    * StopAtFirstError enable to stop server if recieve wrong data or unwanted data
    */
-  app.useGlobalPipes(new ValidationPipe({stopAtFirstError: true})); // Enabling Validation pipelines globally to ensure correct endpoints
+  app.useGlobalPipes(new ValidationPipe({ stopAtFirstError: true })); // Enabling Validation pipelines globally to ensure correct endpoints
   await app.listen(3000);
 }
 
 bootstrap();
-

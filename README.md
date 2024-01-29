@@ -1,37 +1,33 @@
-
 # Loyalty Wallet App
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
+## Description
 
+The Loyalty Wallet App is a NestJS project created for hands-on learning. This README provides comprehensive instructions and details about the project.
 
-### Description
+## Requirements
 
-The purpose of this project is to learn NestJS through hands-on projects, named Loyalty Wallet App. A complete explanation of the code is provided below.
+- Docker
+- Docker-compose
 
-### Requirements
+## Installation
 
-```bash
-Docker/ Docker-compose
-```
-
-### Installation
-
-1. Run docker cmd
+1. Run Docker CMD
 
     ```bash
     docker-compose up
     ```
 
-2. Once the server is running go to Follwing URL to set up DB
+2. Once the server is running, set up the database by visiting:
 
     ```bash
     http://localhost:5050/
     ```
 
-3. Login With following cred
+3. Login with the following credentials:
 
     ```bash
     admin@admin.com
@@ -39,125 +35,223 @@ Docker/ Docker-compose
     ```
 
 4. Right-click on `Servers` and select `Register` -> `Server`.
-5. Give Name of your Choice.
-6. Go to `connection` tab. Fill the exact information
+5. Fill in the required information under the `connection` tab:
+
     - Host name/address: db
     - Port: 5432
     - Maintenance database: postgres
     - Username: postgres
     - Password: Hacker@55
 
-7. Go to CodeBase go to `main.module.ts` file. uncomment the following lines.
+6. Uncomment the following lines in `main.module.ts`:
 
     ```typescript
-    TypeOrmModule.forRoot({ // Configuring TypeORM for database connection
-          type: 'postgres', // Database type (PostgreSQL)
-          host: 'db', // Database host
-          port: 5432, // Database port
-          username: 'postgres', // Database username
-          password: 'Hacker@55', // Database password
-          database: 'postgres', // Database name
-          entities: [User,Transaction,Point_table], // Database entities (e.g., User entity)
-          synchronize: true, // Auto-sync database schema (caution in production)
-          autoLoadEntities: true, // Auto-load entities from the given directories
-        }),
-        TypeOrmModule.forFeature([User, Transaction, Point_table]),
+    // TypeOrmModule configuration
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'db',
+      port: 5432,
+      username: 'postgres',
+      password: 'Hacker@55',
+      database: 'postgres',
+      entities: [User, Transaction, Point_table],
+      synchronize: true,
+      autoLoadEntities: true,
+    }),
+    TypeOrmModule.forFeature([User, Transaction, Point_table]),
     ```
 
-8. Restart Docker-compose using
+7. Restart Docker-compose using:
 
     ```bash
     docker-compose up
     ```
 
-### Detail Description
+## Detail Description
 
-The are three tables used in this project. 
-- user
-- transactions
-- points
+Three tables are used in this project:
 
-1. user tables
-- All authentication information is stored in this tables.
-- authentication is done using JWT tokens
+1. **User Table**
+   - Stores authentication information.
+   - JWT tokens are used for authentication.
 
-2. transactions Table
-- All transaction are recorded in this tables.
-- user can retrive Earn and Burn points information from this table.
+2. **Transactions Table**
+   - Records all transactions.
+   - Users can retrieve Earn and Burn points information.
 
-3. Points Table
-- This Table record the Currents and Total points of user.
-- this also has Earn and Burn API.
+3. **Points Table**
+   - Records Current and Total points of users.
+   - Supports Earn and Burn APIs.
 
-### APIs
+## Relationships between the three tables: `User`, `Transaction`, and `Point_table`.
 
-1. Register User ` http://localhost:3000/auth/register `
+### Database Relationships
 
-This is Post request Where we have to send user Information in body
+1. **User to Transaction Relationship:**
+   - **Type:** One-to-Many
+   - **Explanation:** One user can have multiple transactions recorded in the `Transaction` table. This relationship is established through the `transactions` attribute in the `User` entity, which is defined as a One-to-Many relation.
 
-    ```json
-    {
-      "username": "Abhishek Zade",
-      "password": "Hacker@55",
-      "email": "zadeabhi8781@gmail.com"
-    }
-    ```
+2. **User to Point_table Relationship:**
+   - **Type:** One-to-One
+   - **Explanation:** Each user has a corresponding entry in the `Point_table` table, storing information about their current and total points. The relationship is established through the `point_table` attribute in the `User` entity, which is defined as a One-to-One relation.
 
-2. Login User ` http://0.0.0.0:3000/auth/login ` 
-This is post request where we habe send user cred as body.
+3. **Transaction to User Relationship:**
+   - **Type:** Many-to-One
+   - **Explanation:** Each transaction is associated with a specific user, recorded in the `User` table. This relationship is established through the `user` attribute in the `Transaction` entity, which is defined as a Many-to-One relation.
 
-    ```json
-    {"email":"zadeabhi8781@gmail.com", "password":"Hacker@55"}
-    ```
+4. **Point_table to User Relationship:**
+   - **Type:** One-to-One
+   - **Explanation:** Each entry in the `Point_table` table is associated with a specific user. This relationship is established through the `user` attribute in the `Point_table` entity, which is defined as a One-to-One relation.
 
-in responce we will get Bear token which will be required for futher Operations
-for example
+### Summary:
 
-    ```
-    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJFbWFpbCI6InphZGVhYmhpODc4MUBnbWFpbC5jb20iLCJpYXQiOjE3MDQ4OTI3NzIsImV4cCI6MTcwNDg5MzA3Mn0.gMrcgCZrPfiEVyLcPnc5........................
-    ```
+- Users can have multiple transactions, creating a One-to-Many relationship between `User` and `Transaction`.
+- Each user has a unique entry in the `Point_table` table, establishing a One-to-One relationship between `User` and `Point_table`.
+- Each transaction is associated with a specific user, resulting in a Many-to-One relationship between `Transaction` and `User`.
+- Each entry in the `Point_table` table corresponds to a single user, forming a One-to-One relationship between `Point_table` and `User`.
 
-3. Get User Profile ` http://localhost:3000/users/profile `
-This is Get request where users information comes in response.
-Auth-type: Bearer token
-Token : Copy the responce token form login API.
+These relationships help organize and connect data between the `User`, `Transaction`, and `Point_table` tables in a meaningful way within your Loyalty Wallet App.
 
-4. get Total Score ` http://localhost:3000/points/totalpoints `
-this is Get request where users Total points comes in Responce.
-Auth-type: Bearer token
-Token : Copy the responce token form login API.
+## APIs
 
-5. Get Current Valid Score ` http://localhost:3000/points/validpoints `
-this is the Get request where users Current valid points recived as responce.
-Auth-type: Bearer token
-Token : Copy the responce token form login API.
+1. **Register User**
+   - Endpoint: `http://localhost:3000/auth/register`
+   - Method: POST
+   - Request Body:
+     ```json
+     {
+       "username": "Abhishek Zade",
+       "password": "Hacker@55",
+       "email": "zadeabhi8781@gmail.com"
+     }
+     ```
+   - Response: ...
 
-6. Earn point ` http://localhost:3000/points/earnPoints `
-This is put request where we have to send points in body.
+2. **Login User**
+   - Endpoint: `http://0.0.0.0:3000/auth/login`
+   - Method: POST
+   - Request Body:
+     ```json
+     {"email":"zadeabhi8781@gmail.com", "password":"Hacker@55"}
+     ```
+   - Response: ...
 
-    ```json
-    {
-      "points": 1500
-    }
-    ```
+3. **Get User Profile**
+   - Endpoint: `http://localhost:3000/users/profile`
+   - Method: GET
+   - Auth-type: Bearer token
+   - Token: Copy the token from the login API response.
 
-Auth-type: Bearer token
-Token : Copy the responce token form login API.
+4. **Get Total Score**
+   - Endpoint: `http://localhost:3000/points/totalpoints`
+   - Method: GET
+   - Auth-type: Bearer token
+   - Token: Copy the token from the login API response.
 
-7. Burn point ` http://localhost:3000/points/burnPoints `
-This is put request where we have to send points in body.
+5. **Get Current Valid Score**
+   - Endpoint: `http://localhost:3000/points/validpoints`
+   - Method: GET
+   - Auth-type: Bearer token
+   - Token: Copy the token from the login API response.
 
-    ```bash
-    {
-      "points": 500
-    }
+6. **Earn Points**
+   - Endpoint: `http://localhost:3000/points/earnPoints`
+   - Method: PUT
+   - Request Body:
+     ```json
+     {
+       "points": 1500
+     }
+     ```
+   - Auth-type: Bearer token
+   - Token: Copy the token from the login API response.
 
-    ```
+7. **Burn Points**
+   - Endpoint: `http://localhost:3000/points/burnPoints`
+   - Method: PUT
+   - Request Body:
+     ```json
+     {
+       "Points": 543,
+       "ReceiverEmail": "rahul@gmail.com"
+     }
+     ```
+   - Auth-type: Bearer token
+   - Token: Copy the token from the login API response.
 
-Auth-type: Bearer token
-Token : Copy the responce token form login API.
+8. **Get Transactions**
+   - Endpoint: `http://localhost:3000/transactions`
+   - Method: GET
+   - Auth-type: Bearer token
+   - Token: Copy the token from the login API response.
+   - Query Parameters:
+     - startTime
+     - endTime
+     - type
+     - senderEmail
 
-8. Get Transactions ` http://localhost:3000/transactions `
-This API request gives all Transaction of Current User,
-Auth-type: Bearer token
-Token : Copy the responce token form login API.
+     **Examples:**
+     1. Full Transactions List:
+     ```json
+     {
+       "startTime": "",
+       "endTime": "",
+       "type": "",
+       "senderEmail": ""
+     }
+     ```
+
+     2. Filtered Transactions:
+     ```json
+     {
+       "startTime": "2024-01-29T08:16:53.835Z",
+       "endTime": "2024-01-29T08:18:33.033Z",
+       "type": "credit",
+       "senderEmail": "hacker@gmail.com"
+     }
+     ```
+
+     3. Missing `startTime`:
+     ```json
+     {
+       "startTime": "",
+       "endTime": "2024-01-29T08:18:33.033Z",
+       "type": "credit",
+       "senderEmail": "hacker@gmail.com"
+     }
+     ```
+
+     4. Missing `endTime`:
+     ```json
+     {
+       "startTime": "2024-01-29T08:16:53.835Z",
+       "type": "credit",
+       "senderEmail": "hacker@gmail.com"
+     }
+     ```
+
+     5. Missing `type`:
+     ```json
+     {
+       "startTime": "2024-01-29T08:16:53.835Z",
+       "endTime": "2024-01-29T08:18:33.033Z",
+       "senderEmail": "hacker@gmail.com"
+     }
+     ```
+
+     6. Missing `senderEmail`:
+     ```json
+     {
+       "startTime": "2024-01-29T08:16:53.835Z",
+       "endTime": "2024-01-29T08:18:33.033Z",
+       "type": "credit"
+     }
+     ```
+
+     7. Missing `startTime` and `endTime`:
+     ```json
+     {
+       "type": "credit",
+       "senderEmail": "hacker@gmail.com"
+     }
+     ```

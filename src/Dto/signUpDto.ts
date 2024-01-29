@@ -1,10 +1,11 @@
 import {
-  IsEmail,   
+  IsEmail,
   IsNotEmpty,
   IsString,
   MinLength,
   Matches,
-  MaxLength } from 'class-validator';
+  MaxLength,
+} from 'class-validator';
 
 /*
 
@@ -16,10 +17,7 @@ Validators used in this project
 5. MinLenght(): To check if the given lenght is more than or equal to min lenght
 */
 
-
 export class SignUpDto {
-  
-
   @IsNotEmpty()
   @IsString()
   @MaxLength(20)
@@ -30,9 +28,11 @@ export class SignUpDto {
   @IsString()
   @MinLength(4)
   @MaxLength(20)
-  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {message: 'password too weak'})
+  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+    message: 'password too weak',
+  })
   readonly Password: string; // User's chosen password for registration
-  
+
   @IsEmail()
   @Matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,3}$/g)
   readonly Email: string; // User's email for registration

@@ -9,13 +9,12 @@ export class Point_table {
   @Column() // Indicates a basic column in the database
   Email: string; // Represents the email of the user
 
-  @Column() 
+  @Column()
   CurrPoints: number; // Represents the Current Points of the user
 
-  @Column() 
+  @Column()
   TotalPoints: number; // Represents the TotalPoints of the user
 
-  @OneToOne(()=> User, user => user.point_table)
-  user : User;
-
+  @OneToOne(() => User, (user) => user.point_table)
+  user: User;
 }
