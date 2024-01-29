@@ -11,8 +11,8 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard'; // Importing the AuthGuard to protect routes
 import { UsersService } from './users.service'; // Importing the UsersService to interact with user data
-import { TransactionRequest } from 'src/Dto/trasactionRequestDto';
-import { UpdatePointsDto } from 'src/Dto/updatePointsDto';
+import { TransactionRequest } from 'src/Dto/trasactionRequest.dto';
+import { UpdatePointsDto } from 'src/Dto/updatePoints.dto';
 import { error } from 'console';
 
 

@@ -3,9 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entitys/user.entity';
 import { Transaction } from '../entitys/transaction.entity';
-import { TransactionRequest } from 'src/Dto/trasactionRequestDto';
+import { TransactionRequest } from 'src/Dto/trasactionRequest.dto';
 import { Point_table } from '../entitys/point-table.entity';
-import { UpdatePointsDto } from 'src/Dto/updatePointsDto';
+import { UpdatePointsDto } from 'src/Dto/updatePoints.dto';
 
 enum TransactionType {
   CREDIT = "credit",

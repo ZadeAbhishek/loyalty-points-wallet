@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { SignUpDto } from 'src/Dto/signUpDto';
-import { LogInDto } from 'src/Dto/lognInDto';
+import { SignUpDto } from 'src/Dto/signUp.dto';
+import { LogInDto } from 'src/Dto/lognIn.dto';
 import { UsersService } from 'src/users/users.service';
 
 @Controller('auth') // Declaring a controller for handling authentication-related endpoints with the '/auth' route prefix
