@@ -6,7 +6,7 @@
 
 ## Description
 
-The Loyalty Wallet App is a NestJS project created for hands-on learning. This README provides comprehensive instructions and details about the project.
+The Loyalty Wallet App is a NestJS project created for hands-on learning. This README provides comprehensive instructions and details about the projects.
 
 ## Requirements
 
